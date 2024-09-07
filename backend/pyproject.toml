@@ -1,0 +1,18 @@
+[project]
+name = "microlab-backend"
+version = "0.1.0"
+
+[project.scripts]
+backend = "main:main"
+
+[tool.setuptools]
+# packages = ["microlab-backend"]
+py-modules = ["api", "hardware", "microlab", "recipes", "utils"]
+
+# [tool.setuptools.package-dir]
+# microlab-backend = "/"
+
+[build-system]
+requires = ["setuptools", "wheel"]  # PEP 508 specifications.
+build-backend = "setuptools.build_meta"
+

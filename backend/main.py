@@ -17,27 +17,7 @@ from util.logFormatter import MultiLineFormatter
 import sys
 
 
-def setupLogging():
-    logHandlers = []
-    formatter = MultiLineFormatter(fmt="%(asctime)s [%(levelname)s]: %(message)s")
-
-    fileLogger = handlers.RotatingFileHandler(
-        "{0}/microlab.log".format(config.microlabConfig.logDirectory),
-        maxBytes=config.microlabConfig.logFileMaxBytes,
-        backupCount=config.microlabConfig.logFileBackupCount,
-    )
-    fileLogger.setFormatter(formatter)
-    logHandlers.append(fileLogger)
-    if config.microlabConfig.logToStderr:
-        stderrLogger = logging.StreamHandler(sys.stderr)
-        stderrLogger.setFormatter(formatter)
-        logHandlers.append(stderrLogger)
-
-    logging.basicConfig(handlers=logHandlers, level=config.microlabConfig.logLevel)
-    multiprocessing_logging.install_mp_handler()
-
-
-if __name__ == "__main__":
+def main():
     config.initialSetup()
     setupLogging()
 
@@ -59,3 +39,27 @@ if __name__ == "__main__":
     q2.close()
     q1.join_thread()
     q2.join_thread()
+
+
+def setupLogging():
+    logHandlers = []
+    formatter = MultiLineFormatter(fmt="%(asctime)s [%(levelname)s]: %(message)s")
+
+    fileLogger = handlers.RotatingFileHandler(
+        "{0}/microlab.log".format(config.microlabConfig.logDirectory),
+        maxBytes=config.microlabConfig.logFileMaxBytes,
+        backupCount=config.microlabConfig.logFileBackupCount,
+    )
+    fileLogger.setFormatter(formatter)
+    logHandlers.append(fileLogger)
+    if config.microlabConfig.logToStderr:
+        stderrLogger = logging.StreamHandler(sys.stderr)
+        stderrLogger.setFormatter(formatter)
+        logHandlers.append(stderrLogger)
+
+    logging.basicConfig(handlers=logHandlers, level=config.microlabConfig.logLevel)
+    multiprocessing_logging.install_mp_handler()
+
+
+if __name__ == "__main__":
+    main()
